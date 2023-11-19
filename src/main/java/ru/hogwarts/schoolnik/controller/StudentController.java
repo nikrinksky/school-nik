@@ -44,7 +44,7 @@ public class StudentController {
 
     @GetMapping
     public Map<Long, Student> getAllStudent() {
-        return  studentService.getAllStudent();
+        return studentService.getAllStudent();
     }
 
 }
