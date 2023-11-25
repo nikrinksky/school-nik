@@ -1,58 +1,42 @@
 package ru.hogwarts.schoolnik.service;
 
 import org.springframework.stereotype.Service;
-import ru.hogwarts.schoolnik.exception.StudentNotFoundException;
 import ru.hogwarts.schoolnik.model.Student;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import ru.hogwarts.schoolnik.repository.StudentRepository;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    private final Map<Long, Student> studentMap = new HashMap<>();
-    private Long counter = 0L;
+    private final StudentRepository studentRepository;
+
+    public StudentServiceImpl(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     @Override
-    public Student addStudent(Student student) {
-        Long id = counter++;
-        Student newStudent = new Student(id, student.getName(), student.getAge());
-        studentMap.put(id, newStudent);
+    public Student addStudent(String name, Integer age) {
+        Student newStudent = new Student(name, age);
+        newStudent = studentRepository.save(newStudent);
         return newStudent;
     }
 
     @Override
-    public Student getStudent(Long id) {
-        if (!studentMap.containsKey(id)) {
-            throw new StudentNotFoundException(String.format("Студента [%s] нет", id));
-        }
-        return studentMap.get(id);
+    public Student getStudent(long id) {
+        return studentRepository.findById(id).get();
     }
 
     @Override
-    public Student updateStudent(Long id, Student student) {
-        Student existingStudent = studentMap.get(id);
-        existingStudent.setName(student.getName());
-        existingStudent.setAge(student.getAge());
-        return existingStudent;
+    public Student updateStudent(long id, String name, Integer age) {
+        Student studentForUpdate = getStudent(id);
+        studentForUpdate.setName(name);
+        studentForUpdate.setAge(age);
+        return studentRepository.save(studentForUpdate);
     }
 
     @Override
-    public void removeStudent(Long id) {
-        studentMap.remove(id);
-        System.out.println(String.format("Student %s has been removed", id));
+    public Student removeStudent(long id) {
+        Student studentForDelete = getStudent(id);
+        studentRepository.deleteById(id);
+        return studentForDelete;
     }
 
-    @Override
-    public List<Student> getStudentByAge(int age) {
-        return studentMap.values()
-                .stream()
-                .filter(student -> student.getAge() == age)
-                .toList();
-
-    }
-    @Override
-    public Map<Long, Student> getAllStudent() {
-        return studentMap;
-    }
 }

@@ -1,61 +1,51 @@
 package ru.hogwarts.schoolnik.service;
 
 import org.springframework.stereotype.Service;
-import ru.hogwarts.schoolnik.exception.FacultyNotFoundException;
-import ru.hogwarts.schoolnik.exception.StudentNotFoundException;
 import ru.hogwarts.schoolnik.model.Faculty;
+import ru.hogwarts.schoolnik.repository.FacultyRepository;
 
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
-    private final Map<Long, Faculty> facultyMap = new HashMap<>();
-    private Long counter = 0L;
+
+    private final FacultyRepository facultyRepository;
+
+    public FacultyServiceImpl(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
 
     @Override
-    public Faculty addFaculty(Faculty faculty) {
-        Long id = counter++;
-        Faculty newFaculty = new Faculty(id, faculty.getName(), faculty.getColor());
-        facultyMap.put(id, newFaculty);
+    public Faculty addFaculty(String name, String color) {
+        Faculty newFaculty = new Faculty(name, color);
+        newFaculty = facultyRepository.save(newFaculty);
         return newFaculty;
     }
 
     @Override
-    public Faculty getFaculty(Long id) {
-        if (!facultyMap.containsKey(id)) {
-            throw new FacultyNotFoundException(String.format("Студента [%s] нет", id));
-        }
-        return facultyMap.get(id);
+    public Faculty getFaculty(long id) {
+        return facultyRepository.findById(id).get();
     }
 
     @Override
-    public Faculty updateFaculty(Long id, Faculty faculty) {
-        Faculty existingFaculty = facultyMap.get(id);
-        existingFaculty.setName(faculty.getName());
-        existingFaculty.setColor(faculty.getColor());
-        return existingFaculty;
+    public Faculty updateFaculty(long id, String name, String color) {
+        Faculty facultyForUpdate = getFaculty(id);
+        facultyForUpdate.setName(name);
+        facultyForUpdate.setColor(color);
+        return facultyRepository.save(facultyForUpdate);
     }
 
     @Override
-    public void removeFaculty(Long id) {
-        facultyMap.remove(id);
-        System.out.println(String.format("Faculty %s has been removed", id));
+    public Faculty removeFaculty(long id) {
+        Faculty facultyForDelete = getFaculty(id);
+        facultyRepository.delete(facultyForDelete);
+        return facultyForDelete;
     }
 
-    @Override
-    public List<Faculty> getFacultyByColor(String color) {
-        return facultyMap.values()
-                .stream()
+    public List<Faculty> getByColor(String color) {
+        return facultyRepository.findAll().stream()
                 .filter(faculty -> faculty.getColor().equals(color))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public Map<Long, Faculty> getAllFaculty() {
-        return facultyMap;
     }
 }
