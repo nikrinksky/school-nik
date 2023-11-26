@@ -4,8 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.schoolnik.model.Faculty;
 import ru.hogwarts.schoolnik.repository.FacultyRepository;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Collection;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -43,9 +42,23 @@ public class FacultyServiceImpl implements FacultyService {
         return facultyForDelete;
     }
 
-    public List<Faculty> getByColor(String color) {
-        return facultyRepository.findAll().stream()
-                .filter(faculty -> faculty.getColor().equals(color))
-                .collect(Collectors.toList());
+
+    public Collection<Faculty> getAllFacults() {
+
+        return facultyRepository.findAll();
     }
+
+    @Override
+
+    public Collection<Faculty> findByColor(String name, String color) {
+        return facultyRepository.findAllByColorOrNameIgnoreCase(name, color);
+
+    }
+
+
+//    public List<Faculty> getByColor(String color) {
+//        return facultyRepository.findAll().stream()
+//                .filter(faculty -> faculty.getColor().equals(color))
+//                .collect(Collectors.toList());
+//    }
 }

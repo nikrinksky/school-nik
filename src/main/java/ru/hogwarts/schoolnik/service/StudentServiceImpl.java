@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.schoolnik.model.Student;
 import ru.hogwarts.schoolnik.repository.StudentRepository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -44,6 +45,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> getWhenAgeBetween(Integer min, Integer max) {
         return studentRepository.findAllByAgeBetween(min, max);
+    }
+    @Override
+    public Collection<Student> fidStudentsByFaculty(long facultyId) {
+        return studentRepository.findAllByFaculty_Id(facultyId);
     }
 
 }

@@ -43,4 +43,9 @@ public class StudentController {
         return studentService.getWhenAgeBetween(min, max);
     }
 
+    @GetMapping("/byFaculty")
+    public Collection<Student> findStudentByFaculty(@RequestParam long facId) {
+        return studentService.fidStudentsByFaculty(facId);
+    }
+
 }

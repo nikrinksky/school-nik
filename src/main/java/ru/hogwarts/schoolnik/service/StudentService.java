@@ -2,6 +2,7 @@ package ru.hogwarts.schoolnik.service;
 
 import ru.hogwarts.schoolnik.model.Student;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface StudentService {
@@ -14,4 +15,6 @@ public interface StudentService {
     Student removeStudent(long id);
 
     List<Student> getWhenAgeBetween(Integer min, Integer max);
+
+    Collection<Student> fidStudentsByFaculty(long facultyId);
 }
