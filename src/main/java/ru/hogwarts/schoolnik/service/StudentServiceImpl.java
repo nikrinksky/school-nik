@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.schoolnik.model.Student;
 import ru.hogwarts.schoolnik.repository.StudentRepository;
 
+import java.util.List;
+
 @Service
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
@@ -37,6 +39,11 @@ public class StudentServiceImpl implements StudentService {
         Student studentForDelete = getStudent(id);
         studentRepository.deleteById(id);
         return studentForDelete;
+    }
+
+    @Override
+    public List<Student> getWhenAgeBetween(Integer min, Integer max) {
+        return studentRepository.findAllByAgeBetween(min, max);
     }
 
 }

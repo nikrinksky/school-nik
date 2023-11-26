@@ -38,4 +38,9 @@ public class StudentController {
         return studentService.removeStudent(id);
     }
 
+    @GetMapping("/age-between")
+    public List<Student> getWhenAgeBetween(@RequestParam Integer min, @RequestParam Integer max) {
+        return studentService.getWhenAgeBetween(min, max);
+    }
+
 }
