@@ -1,6 +1,7 @@
 package ru.hogwarts.schoolnik.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,7 +22,7 @@ public class Faculty {
         this.color = color;
     }
 
-    @OneToMany(mappedBy = "faculty")
+    @OneToMany
     private Set<Student> students;
 
     public Set<Student> getStudents() {
