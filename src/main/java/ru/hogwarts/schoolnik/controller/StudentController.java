@@ -5,9 +5,7 @@ import ru.hogwarts.schoolnik.model.Student;
 import ru.hogwarts.schoolnik.service.StudentService;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/students")

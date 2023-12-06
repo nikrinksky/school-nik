@@ -1,6 +1,6 @@
 package ru.hogwarts.schoolnik.service;
 
-import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,6 +12,8 @@ import ru.hogwarts.schoolnik.model.Avatar;
 import ru.hogwarts.schoolnik.model.Student;
 import ru.hogwarts.schoolnik.repository.AvatarRepository;
 import ru.hogwarts.schoolnik.repository.StudentRepository;
+
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;

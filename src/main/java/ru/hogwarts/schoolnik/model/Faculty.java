@@ -1,7 +1,8 @@
 package ru.hogwarts.schoolnik.model;
 
-import jakarta.persistence.*;
 
+
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
