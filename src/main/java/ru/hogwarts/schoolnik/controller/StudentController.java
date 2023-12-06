@@ -5,8 +5,7 @@ import ru.hogwarts.schoolnik.model.Student;
 import ru.hogwarts.schoolnik.service.StudentService;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/students")
@@ -17,34 +16,34 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/{id}")
-    public Student getStudent(@PathVariable Long id) {
-        return studentService.getStudent(id);
-    }
-
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
-        return studentService.addStudent(student);
-    }
-
-    @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
-        return studentService.updateStudent(id, student);
-    }
-
-    @DeleteMapping("/{id}")
-    public void removeStudent(@PathVariable Long id) {
-        studentService.removeStudent(id);
-    }
-
-    @GetMapping("/by-age")
-    public Collection<Student> getStudentByAge(@RequestParam Integer age) {
-        return studentService.getStudentByAge(age);
+        return studentService.addStudent(student.getName(), student.getAge());
     }
 
     @GetMapping
-    public Map<Long, Student> getAllStudent() {
-        return  studentService.getAllStudent();
+    public Student getStudent(@RequestParam long id) {
+        return studentService.getStudent(id);
+    }
+
+    @PutMapping
+    public Student updateStudent(@RequestBody Student student) {
+        return studentService.updateStudent(student.getId(), student.getName(), student.getAge());
+    }
+
+    @DeleteMapping
+    public Student removeStudent(@RequestParam long id) {
+        return studentService.removeStudent(id);
+    }
+
+    @GetMapping("/age-between")
+    public List<Student> getWhenAgeBetween(@RequestParam Integer min, @RequestParam Integer max) {
+        return studentService.getWhenAgeBetween(min, max);
+    }
+
+    @GetMapping("/byFaculty")
+    public Collection<Student> findStudentByFaculty(@RequestParam long facId) {
+        return studentService.fidStudentsByFaculty(facId);
     }
 
 }
