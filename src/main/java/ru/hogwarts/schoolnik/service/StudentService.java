@@ -17,4 +17,10 @@ public interface StudentService {
     List<Student> getWhenAgeBetween(Integer min, Integer max);
 
     Collection<Student> fidStudentsByFaculty(long facultyId);
+
+    long studentsCount();
+
+    double averageAge();
+
+    Collection<Student> lastFiveStudents();
 }

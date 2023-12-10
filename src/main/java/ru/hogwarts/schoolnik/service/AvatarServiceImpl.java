@@ -2,6 +2,7 @@ package ru.hogwarts.schoolnik.service;
 
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
@@ -81,6 +83,12 @@ public class AvatarServiceImpl implements AvatarService{
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
         headers.setContentLength(avatar.getData().length);
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
+    }
+
+    ////////////////////////////////
+    @Override
+    public Collection<Avatar> find(int page, int pageSize) {
+        return avatarRepository.findAll(PageRequest.of(page, pageSize)).getContent();
     }
 
 
