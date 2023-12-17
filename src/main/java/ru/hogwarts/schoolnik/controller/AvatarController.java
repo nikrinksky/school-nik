@@ -10,7 +10,7 @@ import ru.hogwarts.schoolnik.service.AvatarService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/avatar")
@@ -39,9 +39,9 @@ public class AvatarController {
     ////////////////////////////////
 
     @GetMapping
-    public Collection<Avatar> findAvatars(@RequestParam int page,
+    public List<Avatar> findAvatars(@RequestParam int page,
                                           @RequestParam int pageSize) {
-        return avatarService.find(page-1, pageSize); //чтобы получить 0
+        return avatarService.getAvatars(page-1, pageSize); //чтобы получить 0
     }
 
 }

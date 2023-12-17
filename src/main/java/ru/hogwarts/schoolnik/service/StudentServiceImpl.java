@@ -53,18 +53,18 @@ public class StudentServiceImpl implements StudentService {
     }
 ////////////////////////////////////
     @Override
-    public long studentsCount() {
-        return studentRepository.getStudentCount();
+    public int getCount() {
+        return studentRepository.getCount();
     }
 
     @Override
-    public double averageAge() {
-        return studentRepository.getAverageAge();
+    public double getAvgAge() {
+        return studentRepository.getAvgAge();
     }
 
     @Override
-    public Collection<Student> lastFiveStudents() {
-        return studentRepository.getLastFiveStudents();
+    public  List<Student> getLastFive() {
+        return studentRepository.getLastFiveOrderByIdDesc();
 
     }
 }

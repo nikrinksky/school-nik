@@ -3,6 +3,7 @@ package ru.hogwarts.schoolnik.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
+import java.util.List;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
@@ -87,8 +88,9 @@ public class AvatarServiceImpl implements AvatarService{
 
     ////////////////////////////////
     @Override
-    public Collection<Avatar> find(int page, int pageSize) {
-        return avatarRepository.findAll(PageRequest.of(page, pageSize)).getContent();
+    public List<Avatar> getAvatars(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return avatarRepository.findAll(pageable).getContent();
     }
 
 

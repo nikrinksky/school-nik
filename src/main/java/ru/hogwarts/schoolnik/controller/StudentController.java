@@ -1,6 +1,7 @@
 package ru.hogwarts.schoolnik.controller;
 
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.schoolnik.dto.StudentDto;
 import ru.hogwarts.schoolnik.model.Student;
 import ru.hogwarts.schoolnik.service.StudentService;
 
@@ -8,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/student")
 public class StudentController {
     private final StudentService studentService;
 
@@ -17,22 +18,22 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
+    public Student create(@RequestBody StudentDto student) {
         return studentService.addStudent(student.getName(), student.getAge());
     }
 
     @GetMapping
-    public Student getStudent(@RequestParam long id) {
+    public Student get(@RequestParam long id) {
         return studentService.getStudent(id);
     }
 
     @PutMapping
-    public Student updateStudent(@RequestBody Student student) {
+    public Student update(@RequestBody Student student) {
         return studentService.updateStudent(student.getId(), student.getName(), student.getAge());
     }
 
     @DeleteMapping
-    public Student removeStudent(@RequestParam long id) {
+    public Student delete(@RequestParam long id) {
         return studentService.removeStudent(id);
     }
 
@@ -48,16 +49,16 @@ public class StudentController {
 
 ///////////////////////////
     @GetMapping("/count")
-    public  long getCountOfStudents() {
-        return studentService.studentsCount();
+    public  int getCount() {
+        return studentService.getCount();
     }
-    @GetMapping("/avgAge")
-    public  double getAverageAge() {
-        return studentService.averageAge();
+    @GetMapping("/avg-age")
+    public  double getAvgAge() {
+        return studentService.getAvgAge();
     }
-    @GetMapping("/lastfive")
+    @GetMapping("/last-five")
     public  Collection<Student> getLastFiveStudents() {
-        return studentService.lastFiveStudents();
+        return studentService.getLastFive();
     }
 
 }

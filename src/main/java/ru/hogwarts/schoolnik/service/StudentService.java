@@ -18,9 +18,11 @@ public interface StudentService {
 
     Collection<Student> fidStudentsByFaculty(long facultyId);
 
-    long studentsCount();
+    //////////////////////////////////
 
-    double averageAge();
+    int getCount();
 
-    Collection<Student> lastFiveStudents();
+    double getAvgAge();
+
+    List<Student> getLastFive();
 }

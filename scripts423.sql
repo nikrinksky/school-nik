@@ -1,7 +1,7 @@
-SELECT s.name, s.age, f.name
-FROM student s
-    LEFT JOIN faculty f on s.faculty_id = f.id;
+select s."name", s.age, f."name"
+from student s
+         join faculty f on f.id = s.faculty_id;
 
-SELECT s.name, a.id
-FROM student s
-    INNER JOIN avatar a on s.id = a.student_id;
+select *
+from student s
+         join avatar a on s.id = a.student_id;
