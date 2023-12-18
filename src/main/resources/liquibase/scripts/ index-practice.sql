@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset Nik
+-- changeset Nik:1
 
 CREATE INDEX student_name_index ON student (name);
 
