@@ -2,19 +2,27 @@ package ru.hogwarts.schoolnik.service;
 
 import ru.hogwarts.schoolnik.model.Student;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public interface StudentService {
-    Student addStudent(Student student);
+    Student addStudent(String name, Integer age);
 
-    Student getStudent(Long id);
+    Student getStudent(long id);
 
-    Student updateStudent(Long id, Student student);
+    Student updateStudent(long id, String name, Integer age);
 
-    void removeStudent(Long id);
+    Student removeStudent(long id);
 
-    List<Student> getStudentByAge(int age);
+    List<Student> getWhenAgeBetween(Integer min, Integer max);
 
-    Map<Long, Student> getAllStudent();
+    Collection<Student> fidStudentsByFaculty(long facultyId);
+
+    //////////////////////////////////
+
+    int getCount();
+
+    double getAvgAge();
+
+    List<Student> getLastFive();
 }
