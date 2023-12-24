@@ -2,19 +2,18 @@ package ru.hogwarts.schoolnik.service;
 
 import ru.hogwarts.schoolnik.model.Faculty;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Collection;
 
 public interface FacultyService {
-    Faculty addFaculty(Faculty faculty);
+    Faculty addFaculty(String name, String color);
 
-    Faculty getFaculty(Long id);
+    Faculty getFaculty(long id);
 
-    Faculty updateFaculty(Long id, Faculty faculty);
+    Faculty updateFaculty(long id, String name, String color);
 
-    void removeFaculty(Long id);
+    Faculty removeFaculty(long id);
 
-    List<Faculty> getFacultyByColor(String color);
+    Collection<Faculty> findByColor(String name, String color);
 
-    Map<Long, Faculty> getAllFaculty();
+    String getLongestName();
 }
