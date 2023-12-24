@@ -72,5 +72,16 @@ public class StudentController {
     public double getAvgAgeWithStream() {
         return studentService.getAvgAgeWithStream();
     }
+    ////////////////////// Thread
+
+    @GetMapping("/print-to-console")
+    public void printStudents() {
+        studentService.printStudents();
+    }
+
+    @GetMapping("/print-to-console-sync")
+    public void printStudentsSync() {
+        studentService.printStudentsSync();
+    }
 
 }
