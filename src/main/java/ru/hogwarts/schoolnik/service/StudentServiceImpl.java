@@ -8,10 +8,11 @@ import ru.hogwarts.schoolnik.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    private final static Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private final  Logger logger = LoggerFactory.getLogger(StudentService.class);
     private final StudentRepository studentRepository;
 
     public StudentServiceImpl(StudentRepository studentRepository) {
@@ -78,5 +79,24 @@ public class StudentServiceImpl implements StudentService {
         logger.info("вызван метод getLastFive");
         return studentRepository.getLastFiveOrderByIdDesc();
 
+    }
+
+    ///////////////// Stream API
+    @Override
+    public List<String> getAllNamesStartWithA(){
+        String firstSymbol = "A";
+        return studentRepository.findAll().stream()
+                .map(Student::getName)
+                .map(String::toUpperCase)
+                .filter(name -> name.startsWith(firstSymbol))
+                .sorted()
+                .collect(Collectors.toList());
+    }
+    @Override
+    public double getAvgAgeWithStream() {
+        return studentRepository.findAll().stream()
+                .mapToDouble(Student::getAge)
+                .average()
+                .orElse(-1);
     }
 }

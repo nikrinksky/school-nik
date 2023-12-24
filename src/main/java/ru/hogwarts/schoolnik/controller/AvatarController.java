@@ -40,7 +40,7 @@ public class AvatarController {
 
     @GetMapping
     public List<Avatar> findAvatars(@RequestParam int page,
-                                          @RequestParam int pageSize) {
+                                    @RequestParam int pageSize) {
         return avatarService.getAvatars(page-1, pageSize); //чтобы получить 0
     }
 

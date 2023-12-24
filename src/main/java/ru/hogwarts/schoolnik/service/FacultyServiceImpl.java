@@ -10,7 +10,7 @@ import java.util.Collection;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
-    private final static Logger logger = LoggerFactory.getLogger(FacultyService.class);
+    private final Logger logger = LoggerFactory.getLogger(FacultyService.class);
 
     private final FacultyRepository facultyRepository;
 
@@ -57,11 +57,20 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
-
     public Collection<Faculty> findByColor(String name, String color) {
         logger.info("вызван метод findByColor");
         return facultyRepository.findAllByColorOrNameIgnoreCase(name, color);
 
+    }
+
+
+    ///////////////// Stream API
+    @Override
+    public String getLongestName() {
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max((name1, name2) -> name1.length() - name2.length())
+                .get();
     }
 
 }

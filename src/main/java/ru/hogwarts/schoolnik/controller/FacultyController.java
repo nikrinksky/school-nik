@@ -47,4 +47,10 @@ public class FacultyController {
 
     }
 
+    ///////////////// Stream API
+    @GetMapping("/longest-name")
+    public String getLongestName() {
+        return facultyService.getLongestName();
+    }
+
 }
