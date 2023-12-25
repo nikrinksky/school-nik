@@ -144,7 +144,9 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Thread: {}. Student: {}", Thread.currentThread(), student);
     }
 
-    private synchronized void printStudentSync(Student student) {
-        printStudent(student);
+    private void printStudentSync(Student student) {
+        synchronized(StudentServiceImpl.class) {
+            printStudent(student);
+        }
     }
 }
