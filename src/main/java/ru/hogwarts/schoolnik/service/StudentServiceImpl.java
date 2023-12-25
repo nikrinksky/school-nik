@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    private final  Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
     private final StudentRepository studentRepository;
 
     public StudentServiceImpl(StudentRepository studentRepository) {
@@ -61,7 +61,8 @@ public class StudentServiceImpl implements StudentService {
         logger.info("вызван метод fidStudentsByFaculty");
         return studentRepository.findAllByFaculty_Id(facultyId);
     }
-////////////////////////////////////
+
+    ////////////////////////////////////
     @Override
     public int getCount() {
         logger.info("вызван метод getCount");
@@ -75,7 +76,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public  List<Student> getLastFive() {
+    public List<Student> getLastFive() {
         logger.info("вызван метод getLastFive");
         return studentRepository.getLastFiveOrderByIdDesc();
 
@@ -83,7 +84,7 @@ public class StudentServiceImpl implements StudentService {
 
     ///////////////// Stream API
     @Override
-    public List<String> getAllNamesStartWithA(){
+    public List<String> getAllNamesStartWithA() {
         String firstSymbol = "A";
         return studentRepository.findAll().stream()
                 .map(Student::getName)
@@ -92,6 +93,7 @@ public class StudentServiceImpl implements StudentService {
                 .sorted()
                 .collect(Collectors.toList());
     }
+
     @Override
     public double getAvgAgeWithStream() {
         return studentRepository.findAll().stream()
@@ -99,6 +101,7 @@ public class StudentServiceImpl implements StudentService {
                 .average()
                 .orElse(-1);
     }
+
     ////////////////////////////// Threads
     @Override
     public void printStudents() {
@@ -119,6 +122,7 @@ public class StudentServiceImpl implements StudentService {
         });
         thread2.start();
     }
+
     @Override
     public void printStudentsSync() {
         List<Student> students = studentRepository.findAll();
@@ -145,8 +149,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private void printStudentSync(Student student) {
-        synchronized(StudentServiceImpl.class) {
+        synchronized (StudentServiceImpl.class) {
             printStudent(student);
         }
+
     }
 }
