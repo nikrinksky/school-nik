@@ -1,16 +1,37 @@
 package ru.hogwarts.schoolnik.model;
 
-import java.util.Objects;
 
+
+import javax.persistence.*;
+import java.util.Objects;
+import java.util.Set;
+
+@Entity
 public class Faculty {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String color;
 
-    public Faculty(Long id, String name, String color) {
-        this.id = id;
+    public Faculty() {
+
+    }
+
+    public Faculty(String name, String color) {
         this.name = name;
         this.color = color;
+    }
+
+    @OneToMany
+    private Set<Student> students;
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 
     public Long getId() {
@@ -48,5 +69,14 @@ public class Faculty {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, color);
+    }
+
+    @Override
+    public String toString() {
+        return "Faculty{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                '}';
     }
 }
