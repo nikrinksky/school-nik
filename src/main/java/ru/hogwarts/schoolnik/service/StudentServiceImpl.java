@@ -7,7 +7,9 @@ import ru.hogwarts.schoolnik.model.Student;
 import ru.hogwarts.schoolnik.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 @Service
@@ -125,20 +127,20 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void printStudentsSync() {
-        List<Student> students = studentRepository.findAll();
+        Queue<Student> queue = new LinkedList<>(studentRepository.findAll());
 
-        printStudentSync(students.get(0));
-        printStudentSync(students.get(1));
+        printStudentSync(queue.poll());
+        printStudentSync(queue.poll());
 
         Thread thread1 = new Thread(() -> {
-            printStudentSync(students.get(2));
-            printStudentSync(students.get(3));
+            printStudentSync(queue.poll());
+            printStudentSync(queue.poll());
         });
         thread1.start();
 
         Thread thread2 = new Thread(() -> {
-            printStudentSync(students.get(4));
-            printStudentSync(students.get(5));
+            printStudentSync(queue.poll());
+            printStudentSync(queue.poll());
         });
         thread2.start();
 
@@ -148,10 +150,7 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Thread: {}. Student: {}", Thread.currentThread(), student);
     }
 
-    private void printStudentSync(Student student) {
-        synchronized (StudentServiceImpl.class) {
-            printStudent(student);
-        }
-
+    private synchronized void printStudentSync(Student student) {
+        printStudent(student);
     }
 }
